@@ -9,10 +9,13 @@ import {
 } from '@react-pdf/renderer';
 
 import Prata from '../public/fonts/Prata-Regular.ttf';
+import EurostileBold from '../public/fonts/Eurostile-Bold.ttf';
+import EuroStile from '../public/fonts/Eurostile-Regular.ttf';
 
+Font.register({ family: 'Prata', src: Prata });
 Font.register({
-  family: 'Prata',
-  src: Prata,
+  family: 'Eurostile',
+  fonts: [{ src: EuroStile }, { src: EurostileBold, fontWeight: 700 }],
 });
 
 const styles = StyleSheet.create({
@@ -23,10 +26,12 @@ const styles = StyleSheet.create({
   },
   page: {
     padding: '30px',
+    fontFamily: 'Eurostile',
+    fontSize: '14px',
   },
   title: {
     fontFamily: 'Prata',
-    fontSize: '27px',
+    fontSize: '36px',
   },
 });
 
@@ -42,6 +47,7 @@ const PdfDocument = () => (
       <Page size='A4' style={styles.page}>
         <View>
           <Text style={styles.title}>Jane Doe</Text>
+          <Text>Hello!</Text>
         </View>
       </Page>
     </Document>

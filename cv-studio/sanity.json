@@ -3,10 +3,6 @@
   "project": {
     "name": "cv-studio"
   },
-  "api": {
-    "projectId": "q00rywum",
-    "dataset": "production"
-  },
   "plugins": [
     "@sanity/base",
     "@sanity/default-layout",

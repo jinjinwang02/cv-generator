@@ -8,7 +8,7 @@ import {
   PDFViewer,
 } from '@react-pdf/renderer';
 
-import { data } from '../data';
+import { CvType, RowFragmentType, RowsType } from '../types/sanity';
 import Prata from '../public/fonts/Prata-Regular.ttf';
 import EurostileBold from '../public/fonts/Eurostile-Bold.ttf';
 import EuroStile from '../public/fonts/Eurostile-Regular.ttf';
@@ -19,13 +19,13 @@ Font.register({
   fonts: [{ src: EuroStile }, { src: EurostileBold, fontWeight: 700 }],
 });
 
-type Row = { style: string; content: string }[];
-type Rows = { row: Row }[];
-type Body = { rows: Rows }[];
+type Props = {
+  page: CvType;
+};
 
-const MAIN_SECTION_GAP = 16;
+const MAIN_SECTION_GAP = 12;
 const SECTION_VERTICAL_GAP = 8;
-const SECTION_HORIZONTAL_GAP = 16;
+const SECTION_HORIZONTAL_GAP = 12;
 const CONTACT_DETAIL_GAP = 8;
 
 const styles = StyleSheet.create({
@@ -108,9 +108,9 @@ const styles = StyleSheet.create({
   },
 });
 
-const Row = ({ row }: { row: Row }) => (
+const Row = ({ fragments }: { fragments: RowFragmentType['fragments'] }) => (
   <View style={styles.sectionBodyRow}>
-    {row.map(({ style, content }) => (
+    {fragments.map(({ style, content }) => (
       <Text
         key={content}
         style={style === 'bold' ? styles.sectionBodyRowTextBold : undefined}
@@ -121,9 +121,9 @@ const Row = ({ row }: { row: Row }) => (
   </View>
 );
 
-const VerticalSection = ({ body }: { body: Body }) => (
+const VerticalSection = ({ body }: { body: RowsType[] }) => (
   <View style={styles.sectionBodyFlexColumn}>
-    {body.map(({ rows }, index, array) => (
+    {body.map(({ row }, index, array) => (
       <View
         key={index}
         style={
@@ -132,17 +132,17 @@ const VerticalSection = ({ body }: { body: Body }) => (
             : undefined
         }
       >
-        {rows.map(({ row }, index) => (
-          <Row key={index} row={row} />
+        {row.map(({ fragments }, index) => (
+          <Row key={index} fragments={fragments} />
         ))}
       </View>
     ))}
   </View>
 );
 
-const HorizontalSection = ({ body }: { body: Body }) => (
+const HorizontalSection = ({ body }: { body: RowsType[] }) => (
   <View style={styles.sectionBodyFlexRow}>
-    {body.map(({ rows }, index, array) => (
+    {body.map(({ row }, index, array) => (
       <View key={index} style={styles.sectionBodyFlexRowColumns}>
         <View
           style={
@@ -151,8 +151,8 @@ const HorizontalSection = ({ body }: { body: Body }) => (
               : undefined
           }
         >
-          {rows.map(({ row }, index) => (
-            <Row key={index} row={row} />
+          {row.map(({ fragments }, index) => (
+            <Row key={index} fragments={fragments} />
           ))}
         </View>
       </View>
@@ -160,7 +160,7 @@ const HorizontalSection = ({ body }: { body: Body }) => (
   </View>
 );
 
-const PdfDocument = (): JSX.Element => (
+const PdfDocument = ({ page }: Props): JSX.Element => (
   <PDFViewer style={styles.viewer}>
     <Document
       title='CV_Jane_Doe'
@@ -171,9 +171,9 @@ const PdfDocument = (): JSX.Element => (
     >
       <Page size='A4' style={styles.page}>
         <View style={styles.pageHeader}>
-          <Text style={styles.pageHeaderTitle}>{data.title}</Text>
+          <Text style={styles.pageHeaderTitle}>{page.name}</Text>
           <View style={styles.pageHeaderContactDetails}>
-            {data.contactDetails.map((detail) => (
+            {page.contactDetails.map((detail) => (
               <Text key={detail} style={styles.contactDetailsGap}>
                 {detail}
               </Text>
@@ -181,7 +181,7 @@ const PdfDocument = (): JSX.Element => (
           </View>
         </View>
         <View>
-          {data.mainSections.map(({ heading, body, direction }, index) => (
+          {page.mainContent.map(({ heading, body, direction }, index) => (
             <View key={index} style={styles.section}>
               <Text style={styles.sectionHeading}>{heading}</Text>
               {direction === 'column' ? (

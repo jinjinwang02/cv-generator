@@ -18,10 +18,11 @@ const Home: NextPage<Props> = ({ slugs }: Props) => {
   return (
     <>
       <Head>
-        <title>CV generator</title>
+        <title>CV generator 🦾</title>
       </Head>
       <div className='homepage'>
-        <h1>CVs:</h1>
+        <h1>CV generator 🦾</h1>
+        <h2>All available CVs 📑</h2>
         <ul>
           {slugs.map((slug) => (
             <li key={slug}>
@@ -31,6 +32,8 @@ const Home: NextPage<Props> = ({ slugs }: Props) => {
             </li>
           ))}
         </ul>
+        <h2>CV studio link 👩🏻‍💻</h2>
+        <a href='https://google.com'>[placeholder]</a>
       </div>
     </>
   );

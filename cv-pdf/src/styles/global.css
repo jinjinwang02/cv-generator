@@ -8,6 +8,11 @@ body {
   box-sizing: border-box;
 }
 
+a {
+  color: #e86d35;
+  text-decoration: none;
+}
+
 .homepage {
   padding: 0 4rem;
   margin: 0 auto;

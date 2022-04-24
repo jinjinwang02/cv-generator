@@ -8,6 +8,7 @@ import {
   PDFViewer,
 } from '@react-pdf/renderer';
 
+import { data } from '../data';
 import Prata from '../public/fonts/Prata-Regular.ttf';
 import EurostileBold from '../public/fonts/Eurostile-Bold.ttf';
 import EuroStile from '../public/fonts/Eurostile-Regular.ttf';
@@ -25,13 +26,24 @@ const styles = StyleSheet.create({
     borderWidth: 0,
   },
   page: {
-    padding: '30px',
+    padding: 30,
     fontFamily: 'Eurostile',
-    fontSize: '14px',
+    fontSize: 10,
+    letterSpacing: 0.5,
+  },
+  header: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignContent: 'flex-start',
+    justifyContent: 'space-between',
   },
   title: {
     fontFamily: 'Prata',
-    fontSize: '36px',
+    fontSize: 36,
+  },
+  contactDetail: {
+    maxWidth: 80,
+    paddingTop: 8,
   },
 });
 
@@ -45,9 +57,15 @@ const PdfDocument = () => (
       producer='Jane Doe'
     >
       <Page size='A4' style={styles.page}>
-        <View>
-          <Text style={styles.title}>Jane Doe</Text>
-          <Text>Hello!</Text>
+        <View style={styles.header}>
+          <Text style={styles.title}>{data.title}</Text>
+          <View>
+            {data.contactDetails.map((detail) => (
+              <Text key={detail} style={styles.contactDetail}>
+                {detail}
+              </Text>
+            ))}
+          </View>
         </View>
       </Page>
     </Document>

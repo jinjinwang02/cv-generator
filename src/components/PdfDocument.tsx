@@ -1,4 +1,5 @@
 import {
+  Font,
   Page,
   Text,
   View,
@@ -6,6 +7,13 @@ import {
   StyleSheet,
   PDFViewer,
 } from '@react-pdf/renderer';
+
+import Prata from '../public/fonts/Prata-Regular.ttf';
+
+Font.register({
+  family: 'Prata',
+  src: Prata,
+});
 
 const styles = StyleSheet.create({
   viewer: {
@@ -15,6 +23,10 @@ const styles = StyleSheet.create({
   },
   page: {
     padding: '30px',
+  },
+  title: {
+    fontFamily: 'Prata',
+    fontSize: '27px',
   },
 });
 
@@ -29,7 +41,7 @@ const PdfDocument = () => (
     >
       <Page size='A4' style={styles.page}>
         <View>
-          <Text>Jane Doe</Text>
+          <Text style={styles.title}>Jane Doe</Text>
         </View>
       </Page>
     </Document>

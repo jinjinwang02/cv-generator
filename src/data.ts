@@ -11,7 +11,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -30,7 +30,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -75,7 +75,7 @@ export const data = {
           ],
         },
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -120,7 +120,7 @@ export const data = {
           ],
         },
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -171,7 +171,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -203,7 +203,7 @@ export const data = {
           ],
         },
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -241,7 +241,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -272,7 +272,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -315,7 +315,7 @@ export const data = {
       direction: 'row',
       body: [
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -336,7 +336,7 @@ export const data = {
           ],
         },
         {
-          sections: [
+          rows: [
             {
               row: [
                 {
@@ -357,7 +357,7 @@ export const data = {
           ],
         },
         {
-          sections: [
+          rows: [
             {
               row: [
                 {

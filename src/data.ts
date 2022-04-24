@@ -10,13 +10,19 @@ export const data = {
       heading: 'Profile',
       direction: 'column',
       body: [
-        [
-          {
-            style: 'normal',
-            content:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse commodo odio dictum nunc imperdiet, quis porttitor elit dignissim. Praesent mattis dapibus libero, sed pharetra leo bibendum fringilla.',
-          },
-        ],
+        {
+          sections: [
+            {
+              row: [
+                {
+                  style: 'normal',
+                  content:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse commodo odio dictum nunc imperdiet, quis porttitor elit dignissim. Praesent mattis dapibus libero, sed pharetra leo bibendum fringilla.',
+                },
+              ],
+            },
+          ],
+        },
       ],
     },
     {
@@ -24,7 +30,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -69,7 +75,7 @@ export const data = {
           ],
         },
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -114,7 +120,7 @@ export const data = {
           ],
         },
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -165,7 +171,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -197,7 +203,7 @@ export const data = {
           ],
         },
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -235,7 +241,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -266,7 +272,7 @@ export const data = {
       direction: 'column',
       body: [
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -309,7 +315,7 @@ export const data = {
       direction: 'row',
       body: [
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -330,7 +336,7 @@ export const data = {
           ],
         },
         {
-          section: [
+          sections: [
             {
               row: [
                 {
@@ -351,7 +357,7 @@ export const data = {
           ],
         },
         {
-          section: [
+          sections: [
             {
               row: [
                 {

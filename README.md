@@ -1,14 +1,14 @@
 # CV Generator 🦾
 
-A CV generator powered by Next.js, React-pdf and Sanity CMS, for creating and updating CVs using the template provided.
-
-## What does the template look like?
-
-[photo here]
+A CV generator powered by React-pdf and Sanity CMS, for creating and updating CVs using the template provided.
 
 ## Motivation
 
-[TODO]
+Updating CV in Adobe Illustrator (where my CVs used to live) can easily mess up spacing and don't support grammar/spelling checking.
+
+## What does the template look like?
+
+![CV example](./cv-pdf/src/public/template.jpg)
 
 ## Getting started
 
@@ -20,9 +20,9 @@ A CV generator powered by Next.js, React-pdf and Sanity CMS, for creating and up
 yarn install
 ```
 
-2. Create a new Sanity studio by following [the Sanity doc](https://www.sanity.io/docs/getting-started), you'll need to add the project ID and dataset to the project
+2. Create a new Sanity studio by following [the Sanity doc](https://www.sanity.io/docs/getting-started) and keep a note of the project ID in `sanity.json`.
 
-3. In `cv-studio`, create a `.env.development` file and add the following
+3. In `cv-studio`, create a `.env.development` file and add the following:
 
 ```sh
 SANITY_STUDIO_API_PROJECT_ID=[your-project-id]
@@ -63,3 +63,7 @@ yarn workspace cv-studio start
 ```
 
 Note: even though the studio is in dev mode, if the `SANITY_STUDIO_API_DATASET` in your `.env.development` file is `production`, updating content locally will update the content in production
+
+### Using the generator
+
+Create/edit the CV in Sanity studio -> Use the link on the homepage of the app -> Preview or download the PDF 👐

@@ -15,7 +15,7 @@ import type {
   SanityImageDimensions,
   SanityImagePalette,
   SanityImagePaletteSwatch,
-} from "sanity-codegen";
+} from 'sanity-codegen';
 
 export type {
   SanityReference,
@@ -42,14 +42,14 @@ export type {
  *
  */
 export interface CvType extends SanityDocument {
-  _type: "cv";
+  _type: 'cv';
 
   /**
    * Slug — `slug`
    *
    *
    */
-  slug: { _type: "slug"; current: string };
+  slug: { _type: 'slug'; current: string };
 
   /**
    * Name — `string`
@@ -71,10 +71,53 @@ export interface CvType extends SanityDocument {
    *
    */
   mainContent: Array<SanityKeyed<MainContentType>>;
+
+  /**
+   * Spacing — `object`
+   *
+   *
+   */
+  spacing: {
+    _type: 'spacing';
+    /**
+     * Document horizontal padding — `number`
+     *
+     * Default: 30(px)
+     */
+    documentHorizontalPadding?: number;
+
+    /**
+     * Document vertical padding — `number`
+     *
+     * Default: 30(px)
+     */
+    documentVerticalPadding?: number;
+
+    /**
+     * Main section gap — `number`
+     *
+     * Gap between each section, e.g. between Profile and Employment. Default: 12(px)
+     */
+    mainSectionGap?: number;
+
+    /**
+     * Section horizontal gap — `number`
+     *
+     * Gap within each section with horizontal layout, e.g. between skills. Default: 12(px)
+     */
+    sectionHorizontalGap?: number;
+
+    /**
+     * Section vertical gap — `number`
+     *
+     * Gap within each section with vertical layout, e.g. between employment history . Default: 8(px)
+     */
+    sectionVerticalGap?: number;
+  };
 }
 
 export type MainContentType = {
-  _type: "mainContent";
+  _type: 'mainContent';
   /**
    * Heading — `string`
    *
@@ -87,7 +130,7 @@ export type MainContentType = {
    *
    *
    */
-  direction: "column" | "row";
+  direction: 'column' | 'row';
 
   /**
    * Body — `array`
@@ -98,7 +141,7 @@ export type MainContentType = {
 };
 
 export type RowFragmentType = {
-  _type: "rowFragment";
+  _type: 'rowFragment';
   /**
    * Fragments — `array`
    *
@@ -106,7 +149,7 @@ export type RowFragmentType = {
    */
   fragments: Array<
     SanityKeyed<{
-      _type: "fragment";
+      _type: 'fragment';
       /**
        * Content — `text`
        *
@@ -119,13 +162,13 @@ export type RowFragmentType = {
        *
        *
        */
-      style: "bold" | "default";
+      style: 'bold' | 'default';
     }>
   >;
 };
 
 export type RowsType = {
-  _type: "rows";
+  _type: 'rows';
   /**
    * Row — `array`
    *

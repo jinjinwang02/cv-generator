@@ -17,65 +17,172 @@ type Props = {
   page: CvType;
 };
 
-const MAIN_SECTION_GAP = 12;
-const SECTION_VERTICAL_GAP = 8;
-const SECTION_HORIZONTAL_GAP = 12;
-const CONTACT_DETAIL_GAP = 8;
+type SpacingKey = keyof Omit<CvType['spacing'], '_type'>;
+type Spacing = { [key in SpacingKey]: number };
 
-const Row = ({ fragments }: { fragments: RowFragmentType['fragments'] }) => (
-  <View style={styles.sectionBodyRow}>
-    {fragments.map(({ style, content }) => (
-      <Text
-        key={content}
-        style={style === 'bold' ? styles.sectionBodyRowTextBold : undefined}
-      >
-        {content}
-      </Text>
-    ))}
-  </View>
-);
+type SectionProps = { body: RowsType[]; spacing: Spacing };
 
-const VerticalSection = ({ body }: { body: RowsType[] }) => (
-  <View style={styles.sectionBodyFlexColumn}>
-    {body.map(({ row }, index, array) => (
-      <View
-        key={index}
-        style={
-          index + 1 !== array.length
-            ? styles.sectionBodyFlexColumnGap
-            : undefined
-        }
-      >
-        {row.map(({ fragments }, index) => (
-          <Row key={index} fragments={fragments} />
-        ))}
-      </View>
-    ))}
-  </View>
-);
+const DEFAULT_DOCUMENT_HORIZONTAL_PADDING = 30;
+const DEFAULT_DOCUMENT_VERTICAL_PADDING = 30;
+const DEFAULT_MAIN_SECTION_GAP = 12;
+const DEFAULT_SECTION_HORIZONTAL_GAP = 12;
+const DEFAULT_SECTION_VERTICAL_GAP = 8;
 
-const HorizontalSection = ({ body }: { body: RowsType[] }) => (
-  <View style={styles.sectionBodyFlexRow}>
-    {body.map(({ row }, index, array) => (
-      <View key={index} style={styles.sectionBodyFlexRowColumns}>
-        <View
-          style={
-            index + 1 !== array.length
-              ? styles.sectionBodyFlexRowGap
-              : undefined
-          }
+const Row = ({ fragments }: { fragments: RowFragmentType['fragments'] }) => {
+  const styles = StyleSheet.create({
+    sectionBodyRow: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+    },
+    sectionBodyRowTextBold: {
+      letterSpacing: 0,
+      fontWeight: 700,
+      lineHeight: 1.15,
+    },
+  });
+  return (
+    <View style={styles.sectionBodyRow}>
+      {fragments.map(({ style, content }) => (
+        <Text
+          key={content}
+          style={style === 'bold' ? styles.sectionBodyRowTextBold : undefined}
         >
+          {content}
+        </Text>
+      ))}
+    </View>
+  );
+};
+
+const VerticalSection = ({ body, spacing }: SectionProps) => {
+  const styles = StyleSheet.create({
+    sectionBodyFlexColumn: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'column',
+      paddingBottom: spacing.mainSectionGap,
+      marginVertical: -spacing.sectionVerticalGap / 2,
+    },
+    sectionBodyFlexColumnGap: {
+      marginVertical: spacing.sectionVerticalGap / 2,
+    },
+  });
+
+  return (
+    <View style={styles.sectionBodyFlexColumn}>
+      {body.map(({ row }, index) => (
+        <View key={index} style={styles.sectionBodyFlexColumnGap}>
           {row.map(({ fragments }, index) => (
             <Row key={index} fragments={fragments} />
           ))}
         </View>
-      </View>
-    ))}
-  </View>
-);
+      ))}
+    </View>
+  );
+};
+
+const HorizontalSection = ({ body, spacing }: SectionProps) => {
+  const styles = StyleSheet.create({
+    sectionBodyFlexRow: {
+      flex: 1,
+      display: 'flex',
+      flexDirection: 'row',
+      paddingBottom: spacing.mainSectionGap,
+      marginHorizontal: -spacing.sectionHorizontalGap / 2,
+    },
+    sectionBodyFlexRowColumns: {
+      flex: 1,
+    },
+    sectionBodyFlexRowGap: {
+      marginHorizontal: spacing.sectionHorizontalGap / 2,
+    },
+  });
+  return (
+    <View style={styles.sectionBodyFlexRow}>
+      {body.map(({ row }, index) => (
+        <View key={index} style={styles.sectionBodyFlexRowColumns}>
+          <View style={styles.sectionBodyFlexRowGap}>
+            {row.map(({ fragments }, index) => (
+              <Row key={index} fragments={fragments} />
+            ))}
+          </View>
+        </View>
+      ))}
+    </View>
+  );
+};
 
 const PdfDocument = ({ page }: Props): JSX.Element => {
   const { name, contactDetails, mainContent } = page;
+  const spacing = {
+    documentHorizontalPadding:
+      page?.spacing?.documentHorizontalPadding ??
+      DEFAULT_DOCUMENT_HORIZONTAL_PADDING,
+    documentVerticalPadding:
+      page?.spacing?.documentVerticalPadding ??
+      DEFAULT_DOCUMENT_VERTICAL_PADDING,
+    mainSectionGap: page?.spacing?.mainSectionGap ?? DEFAULT_MAIN_SECTION_GAP,
+    sectionHorizontalGap:
+      page?.spacing?.sectionHorizontalGap ?? DEFAULT_SECTION_HORIZONTAL_GAP,
+    sectionVerticalGap:
+      page?.spacing?.sectionVerticalGap ?? DEFAULT_SECTION_VERTICAL_GAP,
+  };
+
+  const styles = StyleSheet.create({
+    viewer: {
+      height: '100vh',
+      width: '100vw',
+      borderWidth: 0,
+    },
+    page: {
+      paddingHorizontal: spacing.documentHorizontalPadding,
+      paddingVertical: spacing.documentVerticalPadding,
+      fontFamily: 'Eurostile',
+      fontSize: 9.5,
+      letterSpacing: 0.3,
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+    },
+    pageHeader: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignContent: 'flex-start',
+      justifyContent: 'space-between',
+      paddingBottom: spacing.mainSectionGap,
+    },
+    pageHeaderTitle: {
+      fontFamily: 'Prata',
+      fontSize: 36,
+    },
+    pageHeaderContactDetails: {
+      maxWidth: 80,
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'flex-end',
+    },
+    contactDetailsGap: {
+      marginTop: 8,
+    },
+    section: {
+      display: 'flex',
+      flexDirection: 'row',
+      alignContent: 'flex-start',
+    },
+    sectionColumn: {
+      display: 'flex',
+      flexDirection: 'column',
+    },
+    sectionHeading: {
+      flex: 1,
+      fontSize: 12,
+      letterSpacing: 0,
+      fontWeight: 700,
+      textTransform: 'uppercase',
+      maxWidth: 140,
+    },
+  });
   return (
     <PDFViewer style={styles.viewer}>
       <Document
@@ -101,9 +208,9 @@ const PdfDocument = ({ page }: Props): JSX.Element => {
               <View key={index} style={styles.section}>
                 <Text style={styles.sectionHeading}>{heading}</Text>
                 {direction === 'column' ? (
-                  <VerticalSection body={body} />
+                  <VerticalSection body={body} spacing={spacing} />
                 ) : (
-                  <HorizontalSection body={body} />
+                  <HorizontalSection body={body} spacing={spacing} />
                 )}
               </View>
             ))}
@@ -118,91 +225,6 @@ Font.register({ family: 'Prata', src: Prata });
 Font.register({
   family: 'Eurostile',
   fonts: [{ src: EuroStile }, { src: EurostileBold, fontWeight: 700 }],
-});
-
-const styles = StyleSheet.create({
-  viewer: {
-    height: '100vh',
-    width: '100vw',
-    borderWidth: 0,
-  },
-  page: {
-    padding: '30px 30px 22px',
-    fontFamily: 'Eurostile',
-    fontSize: 9.5,
-    letterSpacing: 0.3,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-  },
-  pageHeader: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignContent: 'flex-start',
-    justifyContent: 'space-between',
-    marginBottom: MAIN_SECTION_GAP,
-  },
-  pageHeaderTitle: {
-    fontFamily: 'Prata',
-    fontSize: 36,
-  },
-  pageHeaderContactDetails: {
-    maxWidth: 80,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-end',
-  },
-  contactDetailsGap: {
-    marginTop: CONTACT_DETAIL_GAP,
-  },
-  section: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignContent: 'flex-start',
-  },
-  sectionColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  sectionHeading: {
-    flex: 1,
-    fontSize: 12,
-    letterSpacing: 0,
-    fontWeight: 700,
-    textTransform: 'uppercase',
-    maxWidth: 140,
-  },
-  sectionBodyFlexColumn: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    marginBottom: MAIN_SECTION_GAP,
-  },
-  sectionBodyFlexRow: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: MAIN_SECTION_GAP,
-  },
-  sectionBodyFlexColumnGap: {
-    marginBottom: SECTION_VERTICAL_GAP,
-  },
-  sectionBodyRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  sectionBodyRowTextBold: {
-    letterSpacing: 0,
-    fontWeight: 700,
-    lineHeight: 1.15,
-  },
-  sectionBodyFlexRowColumns: {
-    flex: 1,
-  },
-  sectionBodyFlexRowGap: {
-    marginRight: SECTION_HORIZONTAL_GAP,
-  },
 });
 
 export default PdfDocument;

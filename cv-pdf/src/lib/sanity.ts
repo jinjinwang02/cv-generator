@@ -1,8 +1,8 @@
 import PicoSanity from 'picosanity';
 
 const projectDetails = {
-  projectId: 'q00rywum',
-  dataset: 'production',
+  projectId: process.env.NEXT_PUBLIC_SANITY_STUDIO_API_PROJECT_ID || '',
+  dataset: process.env.NEXT_PUBLIC_SANITY_STUDIO_API_DATASET || '',
 };
 
 const sanityClient = new PicoSanity({

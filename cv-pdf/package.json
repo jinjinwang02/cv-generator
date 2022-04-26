@@ -1,6 +1,6 @@
 {
-  "name": "cv-generator",
-  "version": "0.1.0",
+  "name": "cv-pdf",
+  "version": "1.0.0",
   "private": true,
   "main": "src/pages/index.tsx",
   "scripts": {

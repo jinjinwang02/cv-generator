@@ -2,7 +2,6 @@
   "name": "cv-studio",
   "private": true,
   "version": "1.0.0",
-  "description": "",
   "main": "package.json",
   "author": "Jinjin Wang <jinjinwang02@gmail.com>",
   "license": "UNLICENSED",
